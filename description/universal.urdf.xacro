@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+
+<robot name="universal" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <!-- Include macros -->
+    <xacro:include filename="$(find universal_simulation)/description/materials.xacro"/>
+    <xacro:include filename="$(find universal_simulation)/description/inertials.xacro"/>
+    <xacro:include filename="$(find universal_simulation)/description/bases/body.urdf.xacro" />
+    <xacro:include filename="$(find universal_simulation)/description/bases/front_axle.urdf.xacro" />
+    <xacro:include filename="$(find universal_simulation)/description/bases/knuckle.urdf.xacro" />
+    <xacro:include filename="$(find universal_simulation)/description/wheels/front_wheel.urdf.xacro" />
+    <xacro:include filename="$(find universal_simulation)/description/wheels/rear_wheel.urdf.xacro" />
+    <xacro:include filename="$(find universal_simulation)/description/sensors/all_sensors.urdf.xacro" />
+
+
+    <!-- Gazebo ROS2 Control -->
+    <gazebo>
+        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+            <parameters>$(find universal_simulation)/config/controller/controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
+
+    <ros2_control name="GazeboSystem" type="system">
+        <hardware>
+            <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+        </hardware>
+
+        <joint name="left_knuckle_joint">
+            <command_interface name="position">
+                <param name="min">-0.79</param>
+                <param name="max">0.79</param>
+            </command_interface>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+        </joint>
+
+        <joint name="right_knuckle_joint">
+            <command_interface name="position">
+                <param name="min">-0.79</param>
+                <param name="max">0.79</param>
+            </command_interface>
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+        </joint>
+
+        <joint name="rear_right_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-5</param>
+                <param name="max">5</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+
+        <joint name="rear_left_wheel_joint">
+            <command_interface name="velocity">
+                <param name="min">-5</param>
+                <param name="max">5</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+    </ros2_control>
+
+  
+    <!-- The base link -->
+    <link name="base_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <box size="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="orange" />
+        </visual>
+    </link>
+
+    <gazebo reference="base_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+
+    <!-- body -->
+    <xacro:body parent="base_link" />
+    <xacro:front_axle parent="body_box_link" />
+
+    <xacro:knuckle lat_label="left" reflect="1"/>
+    <xacro:knuckle lat_label="right" reflect="-1"/>
+
+    <!-- sensors -->
+
+    <!-- <xacro:sensor_hokuyo prefix="laser" parent="base_link" min_angle="-1.0" max_angle="1.0"> -->
+        <!-- <origin xyz="0.17 0 0.005" rpy="0 0 0"/> -->
+    <!-- </xacro:sensor_hokuyo>    -->
+
+    <xacro:sensor_asus_xtion prefix="camera" parent="body_box_link">
+        <origin xyz="0.57 0 1.195" rpy="0 0.26 0"/>
+    </xacro:sensor_asus_xtion>
+    
+    <xacro:sensor_imu prefix="imu" parent="body_box_link">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:sensor_imu>
+    
+    <xacro:sensor_gps prefix="gps" parent="body_box_link">
+        <origin xyz="0 0 1.18" rpy="0 0 0"/>
+    </xacro:sensor_gps>
+
+    <!-- wheels -->
+
+    <xacro:rear_wheel_link lat_label="left" reflect="1"/>
+    <xacro:rear_wheel_link lat_label="right" reflect="-1"/>
+    <xacro:rear_wheel_joint lat_label="left" reflect="1"/>
+    <xacro:rear_wheel_joint lat_label="right" reflect="-1"/>
+
+    <xacro:front_wheel_link lat_label="left" reflect="1"/>
+    <xacro:front_wheel_link lat_label="right" reflect="-1"/>
+    <xacro:front_wheel_joint lat_label="left" reflect="1"/>
+    <xacro:front_wheel_joint lat_label="right" reflect="-1"/>
+
+</robot>
