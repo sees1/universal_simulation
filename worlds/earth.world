@@ -2,7 +2,7 @@
 <sdf version="1.5">
   <world name="default">
     <scene>
-      <background>202 150 66</background>
+      <background>0.792 0.588 0.259 1</background>
     </scene>
     <light type="directional" name="directional_light_1">
       <pose>0 20 20 0.1 0.1 0</pose>
