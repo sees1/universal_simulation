@@ -14,12 +14,6 @@
 
 
     <!-- Gazebo ROS2 Control -->
-    <gazebo>
-        <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
-            <parameters>$(find universal_simulation)/config/controller/controllers.yaml</parameters>
-        </plugin>
-    </gazebo>
-
     <ros2_control name="GazeboSystem" type="system">
         <hardware>
             <plugin>gazebo_ros2_control/GazeboSystem</plugin>
