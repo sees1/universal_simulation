@@ -25,18 +25,18 @@
 <robot name="all_sensors" xmlns:xacro="http://www.ros.org/wiki/xacro">
     
   <!-- Imu -->
-  <xacro:include filename="$(find eureka_simulation)/description/sensors/imu.urdf.xacro" />  
+  <xacro:include filename="$(find universal_simulation)/description/sensors/imu.urdf.xacro" />  
   
   <!-- Hokuyo -->
-  <xacro:include filename="$(find eureka_simulation)/description/sensors/hokuyo.urdf.xacro" /> 
+  <xacro:include filename="$(find universal_simulation)/description/sensors/hokuyo.urdf.xacro" /> 
 
   <!-- Xtion -->
-  <xacro:include filename="$(find eureka_simulation)/description/sensors/asus_xtion.urdf.xacro" /> 
+  <xacro:include filename="$(find universal_simulation)/description/sensors/asus_xtion.urdf.xacro" /> 
 
   <!-- Realsense d415 -->
-  <xacro:include filename="$(find eureka_simulation)/description/sensors/realsense_d415.urdf.xacro" /> 
+  <xacro:include filename="$(find universal_simulation)/description/sensors/realsense_d415.urdf.xacro" /> 
 
   <!-- GPS -->
-  <xacro:include filename="$(find eureka_simulation)/description/sensors/gps.urdf.xacro" /> 
+  <xacro:include filename="$(find universal_simulation)/description/sensors/gps.urdf.xacro" /> 
   
 </robot>

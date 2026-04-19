@@ -63,7 +63,7 @@ rgbd_odometry:
   
     BRIEF/Bytes: "64"
 
-    OdomORBSLAM/VocPath: "/home/sees/CommLineProg/work/catkin2_ws/install/eureka_simulation/share/eureka_simulation/config/localization/ORBvoc.txt"
+    OdomORBSLAM/VocPath: "/home/sees/CommLineProg/work/catkin2_ws/install/universal_simulation/share/universal_simulation/config/localization/ORBvoc.txt"
   
     Vis/EstimationType: "1"
     Vis/ForwardEstOnly: "true"

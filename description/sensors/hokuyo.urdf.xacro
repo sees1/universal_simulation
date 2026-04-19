@@ -45,7 +45,7 @@
       <visual>
         <origin xyz="0 0 -0.05" rpy="0 0 0"/>
         <geometry>
-            <mesh filename="file://$(find eureka_simulation)/meshes/sensors/hokuyo/hokuyo_ust_20lx.dae"/>
+            <mesh filename="file://$(find universal_simulation)/meshes/sensors/hokuyo/hokuyo_ust_20lx.dae"/>
         </geometry>
       </visual>
   
