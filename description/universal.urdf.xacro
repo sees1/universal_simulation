@@ -95,13 +95,13 @@
         <origin xyz="0.57 0 1.195" rpy="0 0.26 0"/>
     </xacro:sensor_asus_xtion>
     
-    <xacro:sensor_imu prefix="imu" parent="body_box_link">
+    <!-- <xacro:sensor_imu prefix="imu" parent="body_box_link">
         <origin xyz="0 0 0" rpy="0 0 0"/>
     </xacro:sensor_imu>
     
     <xacro:sensor_gps prefix="gps" parent="body_box_link">
         <origin xyz="0 0 1.18" rpy="0 0 0"/>
-    </xacro:sensor_gps>
+    </xacro:sensor_gps> -->
 
     <!-- wheels -->
 
