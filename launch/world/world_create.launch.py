@@ -11,6 +11,8 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node, SetParameter
 from launch.actions import OpaqueFunction
 
+from ros_gz_bridge.actions import RosGzBridge
+
 ARGUMENTS = [
     DeclareLaunchArgument('model', default_value='universal',
                           description='Model to use for simulation'),
@@ -27,10 +29,10 @@ def evaluate_spawn(context, *args, **kwargs):
 
   # launch's path
   robot_state_launch_path = os.path.join(get_package_share_directory(current_package_name), 'launch', 'world', 'robot_state.launch.py')
-  gz_launch_path = os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')
+  gz_launch_path = os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'ros_gz_sim.launch.py')
 
   # config's path
-  gazebo_params_file = os.path.join(get_package_share_directory(current_package_name),'config', 'world', 'gazebo_params.yaml')
+  gazebo_bridge_file = os.path.join(get_package_share_directory(current_package_name),'config', 'world', 'bridge.yaml')
 
   # world description path
   gazebo_world_file = os.path.join(get_package_share_directory(current_package_name), 'worlds', 'earth.world')
@@ -38,9 +40,10 @@ def evaluate_spawn(context, *args, **kwargs):
   #-------------------------------------------------------------------------------------------------------------------------------------------------------
 
   #gazebo initialization
-  gazebo = IncludeLaunchDescription(PythonLaunchDescriptionSource(gz_launch_path),
-                                    launch_arguments={'world': gazebo_world_file,
-                                                      'extra_gazebo_args': '--ros-args --params-file ' + gazebo_params_file}.items()
+  gz = IncludeLaunchDescription(PythonLaunchDescriptionSource(gz_launch_path),
+                                    launch_arguments={'world_sdf_file': gazebo_world_file,
+                                                      'bridge_name': 'ros_gz_bridge',
+                                                      'config_file': gazebo_bridge_file}.items()
   )
 
   # robot state publisher
@@ -48,13 +51,13 @@ def evaluate_spawn(context, *args, **kwargs):
                                          launch_arguments={'model': model}.items()
   )
 
-  spawn_entity = Node(package='gazebo_ros',
-                      executable='spawn_entity.py',
-                      arguments=['-topic', 'robot_description',
-                                 '-entity', model,
-                                 '-x', '0.0',
-                                 '-y', '1.5',
-                                 '-z', '3.8'],
+  spawn_entity = Node(package='ros_gz_sim',
+                      executable='create',
+                      parameters=['topic', '/robot_description',
+                                  'name', model,
+                                  'x', 0.0,
+                                  'y', 1.5,
+                                  'z', 3.8],
                       output='screen',
                       condition=IfCondition(PythonExpression([spawn_robot, " == True "]))
   )
