@@ -53,11 +53,11 @@ def evaluate_spawn(context, *args, **kwargs):
 
   spawn_entity = Node(package='ros_gz_sim',
                       executable='create',
-                      parameters=['topic', '/robot_description',
-                                  'name', model,
-                                  'x', 0.0,
-                                  'y', 1.5,
-                                  'z', 3.8],
+                      parameters=[{'topic', '/robot_description',
+                                   'name', model,
+                                   'x', 0.0,
+                                   'y', 1.5,
+                                   'z', 3.8}],
                       output='screen',
                       condition=IfCondition(PythonExpression([spawn_robot, " == True "]))
   )
