@@ -32,18 +32,18 @@ def evaluate_spawn(context, *args, **kwargs):
   gz_launch_path = os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'ros_gz_sim.launch.py')
 
   # config's path
-  gazebo_bridge_file = os.path.join(get_package_share_directory(current_package_name),'config', 'world', 'bridge.yaml')
+  gz_bridge_file = os.path.join(get_package_share_directory(current_package_name),'config', 'world', 'bridge.yaml')
 
   # world description path
-  gazebo_world_file = os.path.join(get_package_share_directory(current_package_name), 'worlds', 'earth.world')
+  gz_world_file = os.path.join(get_package_share_directory(current_package_name), 'worlds', 'earth.world')
 
   #-------------------------------------------------------------------------------------------------------------------------------------------------------
 
   #gazebo initialization
   gz = IncludeLaunchDescription(PythonLaunchDescriptionSource(gz_launch_path),
-                                    launch_arguments={'world_sdf_file': gazebo_world_file,
+                                    launch_arguments={'world_sdf_file': gz_world_file,
                                                       'bridge_name': 'ros_gz_bridge',
-                                                      'config_file': gazebo_bridge_file}.items()
+                                                      'config_file': gz_bridge_file}.items()
   )
 
   # robot state publisher
@@ -69,7 +69,7 @@ def evaluate_spawn(context, *args, **kwargs):
 
   use_sim_time_param = SetParameter(name='use_sim_time', value=True)
 
-  return [robot_state, gazebo, spawn_entity, controller, use_sim_time_param]
+  return [robot_state, gz, spawn_entity, controller, use_sim_time_param]
 
 def generate_launch_description():
 
